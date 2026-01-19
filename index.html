@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math/Reading Sheet Generator</title>
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' https://api.munetios.com https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:;
+       script-src 'self' https://api.munetios.com 'nonce-er89ug4er89uiotgersghreg54u4rtyuha4wujt4weisugtjehuigrtuhrtuihj45iyh54t8i4tu78g348gj4fui34fgjifjkdhfjerugh4rg4gh3qui34h8tu34tyh4uijqwidjqwhnwjkdwahuidwajdf3wiuth45jih45jgio34gj348uf234hjdqwuijdf3juiYG';
+        object-src 'none';
+         base-uri 'none';
+          frame-src 'self' https://www.munetios.com;"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=swap"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Comic+Relief:wght@300;400;700&display=swap");
+      * {
+        font-feature-settings: "liga" 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Google Sans Flex", sans-serif;
+        background-color: #2d0241;
+        color: #ffffff;
+        margin: 0 auto;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        max-width: 1500px;
+      }
+      .header {
+        text-align: center;
+        padding: 6px 12px;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-feature-settings:
+          "liga" 0,
+          "ss01" 1;
+      }
+      .subtitle-text {
+        font-size: 1rem;
+        font-weight: normal;
+        font-feature-settings:
+          "liga" 0,
+          "ss01" 0;
+      }
+      .tab-selector {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px;
+        margin: 8px 0;
+      }
+      button {
+        all: unset;
+        cursor: pointer;
+      }
+      .tab-button {
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .tab-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .footer {
+        text-align: center;
+        padding: 16px;
+        font-size: 0.9rem;
+        color: #ffffff;
+      }
+      .footer .links {
+        margin: 8px 0;
+      }
+      .footer .links a {
+        color: #ffffff;
+        text-decoration: none;
+        margin: 0 4px;
+      }
+      .footer .links a:hover {
+        text-decoration: underline;
+      }
+      .solving-selector {
+        margin: 24px 0;
+        padding: 16px 20px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .solving-selector p {
+        margin: 0 0 8px 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #fff;
+      }
+
+      .solving-selector label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #fff;
+        padding: 6px 14px 6px 0;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background 0.2s;
+      }
+      option {
+        background: rgb(38, 2, 43);
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .solving-selector label:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .solving-selector input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #fff;
+        margin: 0 8px 0 0;
+        font: inherit;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #a06cd5;
+        border-radius: 50%;
+        display: grid;
+        place-content: center;
+        transition: border-color 0.2s;
+        cursor: pointer;
+        outline: none;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+      }
+
+      .solving-selector input[type="radio"]:hover {
+        border-color: #f7b801;
+      }
+
+      .solving-selector input[type="radio"]:checked {
+        border-color: #f7b801;
+        background-color: #f7b801;
+      }
+
+      .solving-selector input[type="radio"]:checked::before {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #fff;
+        margin: auto;
+      }
+
+      .solving-selector input[type="radio"]:focus {
+        outline: 2px solid #f7b801;
+        outline-offset: 2px;
+      }
+      .radio-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .content {
+        width: 100%;
+        padding: 0 16px;
+        max-width: 1200px;
+      }
+      .tab-content {
+        padding: 24px;
+        border-radius: 12px;
+      }
+      .form-group {
+        margin: 16px 0;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+      .form-group input[type="text"],
+      .form-group input[type="number"],
+      .form-group input[type="date"],
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #f7b801;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+      .btn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        background: #f7b801;
+        color: #2d0241;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.1s;
+        border: none;
+        margin: 16px 8px 16px 0;
+      }
+      .btn:hover {
+        background: #ffcc33;
+        transform: translateY(-2px);
+      }
+      .btn:active {
+        transform: translateY(0);
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      .preview-container {
+        margin: 24px auto;
+        padding: 0.75in;
+        background: #fff;
+        color: #000;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        display: none;
+        width: 8.5in;
+        min-height: 11in;
+        box-sizing: border-box;
+        flex-direction: column;
+      }
+      .preview-container h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      a,
+      b,
+      i,
+      strong {
+        font-feature-settings:
+          "liga" 0,
+          "ss01" 1;
+      }
+      .preview-container.active {
+        display: flex;
+      }
+      .preview-header {
+        border-bottom: 2px solid #2d0241;
+        padding-bottom: 12px;
+        margin-bottom: 24px;
+        position: relative;
+      }
+      .preview-header h2 {
+        margin: 0 0 16px 0;
+        color: #2d0241;
+      }
+      .preview-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 12px 0;
+      }
+      .preview-info div {
+        flex: 1;
+        min-width: 200px;
+      }
+      .preview-info strong {
+        color: #2d0241;
+        margin-right: 8px;
+      }
+      .preview-info .underline {
+        display: inline-block;
+        min-width: 250px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 2px;
+      }
+      .preview-content {
+        margin: 24px 0;
+        min-height: 7in;
+      }
+      .preview-footer {
+        margin-top: auto;
+        padding-top: 24px;
+        text-align: right;
+        border-top: 1px solid #ddd;
+      }
+      .preview-footer .worksheet-link {
+        color: #2d0241;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .preview-footer .worksheet-link:hover {
+        text-decoration: underline;
+      }
+      .math-problem {
+        display: inline-block;
+        margin: 16px 24px 16px 0;
+        padding: 12px;
+        min-width: 120px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .math-problem .problem {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .math-problem .answer-line {
+        border-top: 2px solid #000;
+        padding-top: 8px;
+        min-height: 30px;
+      }
+      .reading-content {
+        line-height: 1.8;
+      }
+      .reading-questions {
+        margin-top: 24px;
+      }
+      .reading-question {
+        margin: 16px 0;
+        padding: 12px;
+        border-left: 3px solid #f7b801;
+        background: rgba(247, 184, 1, 0.1);
+      }
+      .word-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 16px 0;
+      }
+      .word-item {
+        padding: 8px 16px;
+        background: rgba(247, 184, 1, 0.2);
+        border-radius: 6px;
+        font-weight: 500;
+      }
+      .answer-key {
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 3px solid #2d0241;
+        page-break-before: always;
+      }
+      .answer-key h3 {
+        color: #2d0241;
+        margin-bottom: 16px;
+      }
+      .answer-key-item {
+        margin: 8px 0;
+        padding: 8px;
+        background: rgba(247, 184, 1, 0.05);
+        border-radius: 4px;
+      }
+      .font-google-sans {
+        font-family: "Google Sans Flex", sans-serif;
+      }
+      .font-comic-relief {
+        font-family: "Comic Relief", cursive;
+      }
+      .tab-button.active {
+        background-color: rgba(247, 184, 1, 0.3);
+        border-bottom: 2px solid #f7b801;
+      }
+      @media print {
+        body {
+          background: white;
+          color: black;
+          margin: 0;
+          padding: 0;
+          display: block;
+          max-width: 100%;
+        }
+        .header,
+        .tab-selector,
+        .footer,
+        .btn,
+        .solving-selector,
+        .form-group,
+        .content,
+        .tab-content {
+          display: none !important;
+        }
+        .preview-container {
+          display: block !important;
+          box-shadow: none;
+          margin: 0;
+          padding: 0.5in;
+          border-radius: 0;
+          width: 100%;
+          min-height: 100%;
+          page-break-after: avoid;
+        }
+        .preview-header {
+          margin-bottom: 20px;
+        }
+      }
+      @media (max-width: 768px) {
+        .logo-text {
+          font-size: 1.2rem;
+        }
+        .subtitle-text {
+          font-size: 0.9rem;
+        }
+        .tab-selector {
+          flex-direction: row;
+          justify-content: center;
+        }
+        .radio-group {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .tab-content {
+          padding: 16px;
+        }
+        .solving-selector {
+          padding: 12px 16px;
+        }
+        .preview-container {
+          width: 100%;
+          min-height: auto;
+          padding: 16px;
+        }
+        .math-problem {
+          margin: 12px 12px 12px 0;
+        }
+        .btn {
+          width: 100%;
+          margin: 8px 0;
+        }
+      }
+      @media (max-width: 480px) {
+        .content {
+          padding: 0 8px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+          font-size: 16px;
+        }
+        .preview-container {
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header liquid-glass">
+      <p class="logo-text">Math/Reading Sheet Generator</p>
+      <p class="subtitle-text">
+        Generate customized math and reading sheets for your students
+      </p>
+    </div>
+    <div class="content">
+      <div class="tab-selector liquid-glass">
+        <button class="tab-button" data-tab="math">Math</button>
+        <button class="tab-button" data-tab="reading">Reading</button>
+      </div>
+      <div class="tab-content liquid-glass" id="math">
+        <div class="solving-selector">
+          <p>Select the type of math problems:</p>
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="addition"
+              name="math-problem"
+              value="addition"
+              checked
+            />
+            <label for="addition">Addition</label>
+            <input
+              type="radio"
+              id="subtraction"
+              name="math-problem"
+              value="subtraction"
+            />
+            <label for="subtraction">Subtraction</label>
+            <input
+              type="radio"
+              id="multiplication"
+              name="math-problem"
+              value="multiplication"
+            />
+            <label for="multiplication">Multiplication</label>
+            <input
+              type="radio"
+              id="division"
+              name="math-problem"
+              value="division"
+            />
+            <label for="division">Division</label>
+            <input type="radio" id="mixed" name="math-problem" value="mixed" />
+            <label for="mixed">Mixed Operations</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="difficulty">Difficulty Level:</label>
+          <select id="difficulty">
+            <option
+              style="color: white; background-color: #2d0241"
+              value="easy"
+            >
+              Easy (1-10)
+            </option>
+            <option
+              style="color: white; background-color: #2d0241"
+              value="medium"
+              selected
+            >
+              Medium (1-50)
+            </option>
+            <option
+              style="color: white; background-color: #2d0241"
+              value="hard"
+            >
+              Hard (1-100)
+            </option>
+            <option
+              style="color: white; background-color: #2d0241"
+              value="expert"
+            >
+              Expert (1-1000)
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="math-font">Worksheet Font:</label>
+          <select id="math-font">
+            <option value="google-sans" selected>Google Sans Flex</option>
+            <option value="comic-relief">Comic Relief</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="num-problems">Number of Problems:</label>
+          <input type="number" id="num-problems" min="5" max="50" value="20" />
+        </div>
+        <div class="solving-selector">
+          <p>Additional Options:</p>
+          <div class="radio-group">
+            <input type="checkbox" id="show-answers" />
+            <label for="show-answers">Show Answer Key</label>
+            <input type="checkbox" id="word-problems" />
+            <label for="word-problems">Include Word Problems</label>
+          </div>
+        </div>
+        <button class="btn" id="generate-math-btn">Generate Math Sheet</button>
+        <button class="btn btn-secondary" id="print-math-btn">Print</button>
+      </div>
+      <div class="tab-content liquid-glass" id="reading" style="display: none">
+        <div class="solving-selector">
+          <p>Select reading activity type:</p>
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="comprehension"
+              name="reading-type"
+              value="comprehension"
+              checked
+            />
+            <label for="comprehension">Reading Comprehension</label>
+            <input
+              type="radio"
+              id="vocabulary"
+              name="reading-type"
+              value="vocabulary"
+            />
+            <label for="vocabulary">Vocabulary Practice</label>
+            <input
+              type="radio"
+              id="sight-words"
+              name="reading-type"
+              value="sight-words"
+            />
+            <label for="sight-words">Sight Words</label>
+            <input
+              type="radio"
+              id="spelling"
+              name="reading-type"
+              value="spelling"
+            />
+            <label for="spelling">Spelling Practice</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reading-level">Reading Level:</label>
+          <select id="reading-level">
+            <option value="kindergarten">Kindergarten</option>
+            <option value="grade1">1st Grade</option>
+            <option value="grade2" selected>2nd Grade</option>
+            <option value="grade3">3rd Grade</option>
+            <option value="grade4">4th Grade</option>
+            <option value="grade5">5th Grade</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reading-font">Worksheet Font:</label>
+          <select id="reading-font">
+            <option value="google-sans" selected>Google Sans Flex</option>
+            <option value="comic-relief">Comic Relief</option>
+          </select>
+        </div>
+        <div class="form-group" id="custom-passage-group">
+          <label for="custom-passage">Custom Passage (Optional):</label>
+          <textarea
+            id="custom-passage"
+            placeholder="Enter your own reading passage or leave blank to generate one"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="num-questions">Number of Questions/Words:</label>
+          <input type="number" id="num-questions" min="5" max="20" value="10" />
+        </div>
+        <button class="btn" id="generate-reading-btn">
+          Generate Reading Sheet
+        </button>
+        <button class="btn btn-secondary" id="print-reading-btn">Print</button>
+      </div>
+    </div>
+    <div class="preview-container" id="preview">
+      <div class="preview-header">
+        <div
+          class="preview-info"
+          style="flex-direction: row; flex-wrap: nowrap"
+        >
+          <div>
+            <strong>Name:</strong>
+            <span class="underline"></span>
+          </div>
+          <div>
+            <strong>Date:</strong>
+            <span class="underline"></span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-content" id="preview-content">
+        <!-- Generated content will appear here -->
+      </div>
+      <div class="preview-footer">
+        <a href="https://education.munetios.com" class="worksheet-link"
+          >education.munetios.com</a
+        >
+      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; 2026 Munetios. All rights reserved.</p>
+      <div class="links">
+        <a href="privacy.html">Privacy</a> |
+        <a href="acceptable-uses.html">Acceptable Use</a> |
+        <a href="index.html">Education</a> |
+        <a href="schools.html">For Schools</a>
+      </div>
+      <p>Designed with ❤️ by Munetios</p>
+    </div>
+    <script
+      nonce="er89ug4er89uiotgersghreg54u4rtyuha4wujt4weisugtjehuigrtuhrtuihj45iyh54t8i4tu78g348gj4fui34fgjifjkdhfjerugh4rg4gh3qui34h8tu34tyh4uijqwidjqwhnwjkdwahuidwajdf3wiuth45jih45jgio34gj348uf234hjdqwuijdf3juiYG"
+    >
+      // Set today's date as default
+      const today = new Date().toISOString().split("T")[0];
+
+      // Tab switching functionality
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        button.addEventListener("click", function () {
+          const tabName = this.getAttribute("data-tab");
+          document.querySelectorAll(".tab-content").forEach((content) => {
+            content.style.display = "none";
+          });
+          document.querySelectorAll(".tab-button").forEach((btn) => {
+            btn.classList.remove("active");
+          });
+          document.getElementById(tabName).style.display = "block";
+          this.classList.add("active");
+        });
+      });
+
+      // Set first tab as active
+      document.querySelector(".tab-button").classList.add("active");
+
+      // Attach event listeners to buttons
+      document
+        .getElementById("generate-math-btn")
+        .addEventListener("click", generateMathSheet);
+      document
+        .getElementById("print-math-btn")
+        .addEventListener("click", printPreview);
+      document
+        .getElementById("generate-reading-btn")
+        .addEventListener("click", generateReadingSheet);
+      document
+        .getElementById("print-reading-btn")
+        .addEventListener("click", printPreview);
+
+      // Math sheet generation
+      function generateMathSheet() {
+        const problemType = document.querySelector(
+          'input[name="math-problem"]:checked',
+        ).value;
+        const difficulty = document.getElementById("difficulty").value;
+        const numProblems = parseInt(
+          document.getElementById("num-problems").value,
+        );
+        const showAnswers = document.getElementById("show-answers").checked;
+        const includeWordProblems =
+          document.getElementById("word-problems").checked;
+        const fontChoice = document.getElementById("math-font").value;
+
+        let maxNum;
+        switch (difficulty) {
+          case "easy":
+            maxNum = 10;
+            break;
+          case "medium":
+            maxNum = 50;
+            break;
+          case "hard":
+            maxNum = 100;
+            break;
+          case "expert":
+            maxNum = 1000;
+            break;
+          default:
+            maxNum = 50;
+        }
+
+        let html = "<h3>Math Practice Sheet</h3>";
+        let problems = [];
+
+        for (let i = 0; i < numProblems; i++) {
+          let num1 = Math.floor(Math.random() * maxNum) + 1;
+          let num2 = Math.floor(Math.random() * maxNum) + 1;
+          let operation, answer, problemText;
+
+          if (problemType === "mixed") {
+            const ops = [
+              "addition",
+              "subtraction",
+              "multiplication",
+              "division",
+            ];
+            const randomOp = ops[Math.floor(Math.random() * ops.length)];
+            problemType = randomOp;
+          }
+
+          switch (problemType) {
+            case "addition":
+              operation = "+";
+              answer = num1 + num2;
+              problemText = `${num1} + ${num2}`;
+              break;
+            case "subtraction":
+              if (num1 < num2) [num1, num2] = [num2, num1];
+              operation = "-";
+              answer = num1 - num2;
+              problemText = `${num1} - ${num2}`;
+              break;
+            case "multiplication":
+              operation = "×";
+              answer = num1 * num2;
+              problemText = `${num1} × ${num2}`;
+              break;
+            case "division":
+              num1 = num1 * num2;
+              operation = "÷";
+              answer = num1 / num2;
+              problemText = `${num1} ÷ ${num2}`;
+              break;
+          }
+
+          problems.push({
+            text: problemText,
+            answer: answer,
+          });
+        }
+
+        problems.forEach((problem, index) => {
+          html += `<div class="math-problem">
+            <div class="problem">${index + 1}${problem.text} =</div>
+            <div class="answer-line">${showAnswers ? problem.answer : ""}</div>
+          </div>`;
+        }); // higher index = higher problem number, lower index = lower problem number, - index = starting problem number offset
+
+        if (includeWordProblems) {
+          html +=
+            '<h4 style="clear: both; margin-top: 24px;">Word Problems:</h4>';
+          const wordProblems = [
+            `Sarah has ${Math.floor(Math.random() * 20) + 5} apples. She gives ${Math.floor(Math.random() * 10) + 2} to her friend. How many apples does Sarah have left?`,
+            `There are ${Math.floor(Math.random() * 15) + 10} students in a class. Each student has ${Math.floor(Math.random() * 5) + 2} pencils. How many pencils are there in total?`,
+            `A baker made ${Math.floor(Math.random() * 30) + 20} cookies. He puts them equally into ${Math.floor(Math.random() * 4) + 2} boxes. How many cookies are in each box?`,
+          ];
+          wordProblems.slice(0, 3).forEach((wp, i) => {
+            html += `<div class="reading-question">${i + 1}. ${wp}<br><br>Answer: ____________</div>`;
+          });
+        }
+
+        displayPreview("Math Practice Sheet", html, fontChoice);
+      }
+
+      // Reading sheet generation
+      function generateReadingSheet() {
+        const readingType = document.querySelector(
+          'input[name="reading-type"]:checked',
+        ).value;
+        const level = document.getElementById("reading-level").value;
+        const numQuestions = parseInt(
+          document.getElementById("num-questions").value,
+        );
+        const customPassage = document.getElementById("custom-passage").value;
+        const fontChoice = document.getElementById("reading-font").value;
+
+        let html = "";
+
+        switch (readingType) {
+          case "comprehension":
+            html = generateComprehension(customPassage, level, numQuestions);
+            break;
+          case "vocabulary":
+            html = generateVocabulary(level, numQuestions);
+            break;
+          case "sight-words":
+            html = generateSightWords(level, numQuestions);
+            break;
+          case "spelling":
+            html = generateSpelling(level, numQuestions);
+            break;
+        }
+
+        displayPreview("Reading Practice Sheet", html, fontChoice);
+      }
+
+      function generateComprehension(customPassage, level, numQuestions) {
+        const passages = [
+          {
+            title: "The Amazing Journey of Monarch Butterflies",
+            text: `Every year, millions of monarch butterflies embark on one of nature's most incredible journeys. These delicate creatures, weighing less than a gram, travel up to 3,000 miles from Canada and the northern United States to the mountains of central Mexico. This migration is so remarkable because no single butterfly completes the entire round trip. Instead, it takes three to four generations to complete the cycle.
+
+The journey begins in late summer when the days grow shorter and temperatures start to drop. Unlike their parents and grandparents who lived for only a few weeks, these special monarchs can live up to eight months. Scientists call them the "super generation." They are born with a biological clock that tells them exactly where to go, even though they have never been there before.
+
+As the butterflies travel south, they face many dangers. They must avoid predators like birds and spiders, survive storms, and find enough nectar from flowers to fuel their long flight. They travel about 50 to 100 miles per day, riding air currents and gliding whenever possible to conserve energy. At night, they cluster together in trees to stay warm and safe.
+
+When the monarchs finally reach the oyamel fir forests in Mexico, they gather by the millions in just a few mountain areas. The trees become orange and black with butterflies, and their wings make a sound like gentle rain as they flutter. The cool mountain temperatures allow the butterflies to conserve energy during the winter months. Local people have protected these forests for generations, understanding the importance of preserving this natural wonder.
+
+In spring, the monarchs begin their journey north. They stop in Texas and other southern states to lay eggs on milkweed plants, the only food monarch caterpillars will eat. These new butterflies continue north, having the next generation along the way. By summer, monarchs can be found throughout North America. Then, in late summer, the cycle begins again with a new super generation preparing for the long flight south.
+
+Scientists are still learning about how monarchs navigate. They believe the butterflies use the sun as a compass and may also use Earth's magnetic field. Recent studies show that monarch populations are declining due to habitat loss, pesticides, and climate change. Conservation efforts are now focused on protecting milkweed plants and creating butterfly-friendly gardens to help ensure these magnificent creatures continue their amazing journey for generations to come.`,
+            questions: [
+              "How far can monarch butterflies travel during their migration?",
+              "What makes the 'super generation' of monarchs different from other generations?",
+              "What dangers do monarchs face during their migration?",
+              "Where do the butterflies spend the winter months?",
+              "Why are milkweed plants important for monarchs?",
+              "How do scientists think monarchs navigate during their journey?",
+              "What are the main threats to monarch butterfly populations?",
+              "How many generations does it take to complete the full migration cycle?",
+            ],
+            answers: [
+              "Up to 3,000 miles from Canada and northern United States to central Mexico",
+              "They can live up to 8 months instead of just a few weeks",
+              "Predators like birds and spiders, storms, and the need to find enough nectar for food",
+              "In the oyamel fir forests in the mountains of central Mexico",
+              "Milkweed is the only food that monarch caterpillars will eat",
+              "They use the sun as a compass and may use Earth's magnetic field",
+              "Habitat loss, pesticides, and climate change",
+              "Three to four generations",
+            ],
+          },
+          {
+            title: "The Secret World Beneath Our Feet",
+            text: `Most people walk on soil every day without giving it much thought, but beneath our feet lies an entire universe teeming with life. A single teaspoon of healthy soil contains more living organisms than there are people on Earth. This hidden world of bacteria, fungi, insects, and other creatures works together in amazing ways to support all life on our planet.
+
+Soil is much more than just dirt. It is a complex ecosystem that takes hundreds to thousands of years to form. Soil begins with rock that slowly breaks down through weathering—the action of wind, water, ice, and temperature changes. As the rock breaks into smaller and smaller pieces, plants begin to grow. When these plants die, they decompose and add organic matter to the developing soil. This process continues year after year, gradually building up the rich, dark soil that is perfect for growing crops.
+
+The most important residents of the soil are microorganisms—tiny living things that can only be seen with a microscope. Bacteria and fungi break down dead plants and animals, releasing nutrients that living plants need to grow. Some bacteria can even take nitrogen from the air and convert it into a form that plants can use. This is incredibly important because nitrogen is essential for plant growth, yet most plants cannot use the nitrogen gas that makes up 78% of our atmosphere.
+
+Earthworms are called "nature's plows" because they create tunnels as they burrow through the soil. These tunnels allow air and water to reach plant roots more easily. Earthworms also eat dead plant material and soil, grinding it up in their bodies and leaving behind castings—a fancy word for earthworm waste—that are rich in nutrients. A single earthworm can produce its own weight in castings every day!
+
+The soil is also home to thousands of species of insects, spiders, and other small creatures. Some of these, like springtails and mites, help break down dead material. Others, like predatory beetles, hunt other insects. All of these creatures play important roles in keeping the soil healthy and productive.
+
+Unfortunately, soil is a resource that is often taken for granted and is easily damaged. When forests are cut down or prairies are plowed, soil can be washed or blown away. This erosion removes the rich topsoil that took centuries to form. Chemical fertilizers and pesticides can harm the beneficial organisms that live in soil. Climate change is also affecting soil health by changing rainfall patterns and increasing erosion in some areas.
+
+Scientists and farmers are working together to protect and improve soil health. They use practices like crop rotation, cover crops, and reduced tillage to keep soil healthy and productive. Many farmers are also using compost and natural fertilizers to feed the soil organisms rather than just feeding the plants. By taking care of the soil, we ensure that it can continue to support us with food, clean water, and a stable climate for generations to come.`,
+            questions: [
+              "How many living organisms are in a teaspoon of healthy soil?",
+              "What is weathering and how does it help form soil?",
+              "Why are bacteria important in the nitrogen cycle?",
+              "Why are earthworms called 'nature's plows'?",
+              "What are earthworm castings?",
+              "Name two ways that soil can be damaged.",
+              "What practices do farmers use to protect soil health?",
+              "How long does it take for soil to form?",
+            ],
+            answers: [
+              "More than there are people on Earth",
+              "Weathering is the breakdown of rock through wind, water, ice, and temperature changes, which creates the base material for soil",
+              "They convert nitrogen from the air into a form that plants can use",
+              "Because they create tunnels as they burrow, which allows air and water to reach plant roots",
+              "Earthworm waste that is rich in nutrients",
+              "Erosion from cutting down forests or plowing prairies, and damage from chemical fertilizers and pesticides",
+              "Crop rotation, cover crops, reduced tillage, using compost, and natural fertilizers",
+              "Hundreds to thousands of years",
+            ],
+          },
+          {
+            title: "The Life Cycle of a Frog",
+            text: `Frogs are fascinating creatures that go through amazing changes as they grow. The life cycle of a frog begins when the female lays eggs in water. These eggs look like small jelly-like clusters. After a few days, tiny tadpoles hatch from the eggs. Tadpoles look more like fish than frogs—they have long tails and breathe through gills.
+
+        As tadpoles grow, they start to change. They develop back legs first, then front legs. Their tails become shorter, and they begin to breathe air using lungs instead of gills. This process is called metamorphosis. When the transformation is complete, the tadpole has become a young frog and can leave the water to live on land.
+
+        Adult frogs spend time both in water and on land. They eat insects, worms, and other small animals. Frogs are important for the environment because they help control insect populations and are food for many other animals. The life cycle then begins again when adult frogs lay eggs in the water.`,
+            questions: [
+              "Where do frogs lay their eggs?",
+              "What do tadpoles look like?",
+              "What is metamorphosis?",
+              "How do tadpoles breathe?",
+              "What changes happen as tadpoles become frogs?",
+              "What do adult frogs eat?",
+              "Why are frogs important for the environment?",
+              "What happens at the end of the frog's life cycle?",
+            ],
+            answers: [
+              "In water",
+              "They look like fish with long tails",
+              "The process of changing from a tadpole to a frog",
+              "Through gills",
+              "They grow legs, lose their tails, and develop lungs",
+              "Insects, worms, and other small animals",
+              "They help control insect populations and are food for other animals",
+              "Adult frogs lay eggs and the cycle repeats",
+            ],
+          },
+          {
+            title: "The First Flight of the Wright Brothers",
+            text: `On December 17, 1903, two brothers named Orville and Wilbur Wright made history in Kitty Hawk, North Carolina. They built and flew the first powered airplane. Their invention changed the world and made it possible for people to travel by air.
+
+        The Wright brothers were curious and loved to experiment. They studied birds and built gliders before creating their airplane. Their first flight lasted only 12 seconds and covered 120 feet, but it proved that powered flight was possible. The brothers continued to improve their designs, and soon airplanes could fly farther and higher.
+
+        Today, airplanes are used for travel, shipping, and even exploring space. The Wright brothers' first flight is remembered as a major achievement in science and engineering.`,
+            questions: [
+              "Who were the Wright brothers?",
+              "Where did the first flight take place?",
+              "When did the first flight happen?",
+              "How long did the first flight last?",
+              "What did the Wright brothers study before building airplanes?",
+              "Why is the first flight important?",
+              "How did airplanes change the world?",
+              "What are airplanes used for today?",
+            ],
+            answers: [
+              "Orville and Wilbur Wright",
+              "Kitty Hawk, North Carolina",
+              "December 17, 1903",
+              "12 seconds",
+              "Birds and gliders",
+              "It proved powered flight was possible",
+              "They made travel and shipping faster and easier",
+              "Travel, shipping, and exploring space",
+            ],
+          },
+          {
+            title: "The Water Cycle",
+            text: `Water is always moving around our planet in a process called the water cycle. The sun heats up water in rivers, lakes, and oceans, turning it into water vapor. This process is called evaporation. The water vapor rises into the air and cools down, forming clouds through condensation.
+
+        When the clouds get heavy, water falls back to the ground as rain, snow, or hail. This is called precipitation. The water collects in rivers and lakes, and the cycle starts again. The water cycle is important because it provides fresh water for plants, animals, and people.`,
+            questions: [
+              "What is the water cycle?",
+              "What causes water to evaporate?",
+              "What is condensation?",
+              "What happens when clouds get heavy?",
+              "What is precipitation?",
+              "Where does water collect after precipitation?",
+              "Why is the water cycle important?",
+              "Name three forms of precipitation.",
+            ],
+            answers: [
+              "The movement of water around the planet",
+              "The sun heats up water",
+              "Water vapor cools and forms clouds",
+              "Water falls as rain, snow, or hail",
+              "Rain, snow, or hail falling from clouds",
+              "Rivers, lakes, and oceans",
+              "It provides fresh water for living things",
+              "Rain, snow, and hail",
+            ],
+          },
+          {
+            title: "The Busy Life of Bees",
+            text: `Bees are small insects that play a big role in nature. They live in colonies and work together to make honey and pollinate flowers. Each bee has a special job. Worker bees collect nectar from flowers and bring it back to the hive. They also help care for young bees and keep the hive clean.
+
+        The queen bee lays eggs, and drone bees help her. Bees pollinate plants by moving pollen from one flower to another. This helps plants grow fruits and seeds. Without bees, many plants would not be able to grow. Bees are important for our food and the environment.`,
+            questions: [
+              "What do bees make?",
+              "Where do bees live?",
+              "What do worker bees do?",
+              "Who lays eggs in the hive?",
+              "How do bees help plants?",
+              "Why are bees important?",
+              "What is pollination?",
+              "What would happen without bees?",
+            ],
+            answers: [
+              "Honey",
+              "In colonies or hives",
+              "Collect nectar, care for young, and clean the hive",
+              "The queen bee",
+              "By moving pollen from flower to flower",
+              "They help plants grow and provide food",
+              "Moving pollen from one flower to another",
+              "Many plants would not grow and we would have less food",
+            ],
+          },
+          {
+            title: "The Solar System",
+            text: `Our solar system is made up of the sun and everything that orbits around it, including eight planets, moons, asteroids, and comets. The sun is a giant ball of hot gas that gives us light and heat. The planets are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune.
+
+        Earth is the only planet known to have life. Jupiter is the largest planet, and Mercury is the smallest. Saturn is famous for its beautiful rings. The solar system is huge, and scientists use telescopes and spacecraft to learn more about it.`,
+            questions: [
+              "What is at the center of our solar system?",
+              "How many planets are in our solar system?",
+              "Which planet is the largest?",
+              "Which planet is the smallest?",
+              "Which planet has rings?",
+              "Which planet has life?",
+              "What do scientists use to study the solar system?",
+              "Name two things besides planets that orbit the sun.",
+            ],
+            answers: [
+              "The sun",
+              "Eight",
+              "Jupiter",
+              "Mercury",
+              "Saturn",
+              "Earth",
+              "Telescopes and spacecraft",
+              "Moons, asteroids, and comets",
+            ],
+          },
+          {
+            title: "The Story of Helen Keller",
+            text: `Helen Keller was born in 1880 in Alabama. When she was very young, she became sick and lost her sight and hearing. Helen's world was dark and silent, but she was very smart and curious. Her teacher, Anne Sullivan, taught her how to communicate using sign language and touch.
+
+        Helen learned to read, write, and even speak. She went to college and wrote books about her life. Helen Keller became famous for showing that people with disabilities can learn and achieve great things. She traveled the world to help others and inspire them.`,
+            questions: [
+              "Where was Helen Keller born?",
+              "What happened to Helen when she was young?",
+              "Who was Helen's teacher?",
+              "How did Helen learn to communicate?",
+              "What did Helen Keller achieve?",
+              "What did Helen write about?",
+              "How did Helen inspire others?",
+              "Why is Helen Keller famous?",
+            ],
+            answers: [
+              "Alabama",
+              "She lost her sight and hearing",
+              "Anne Sullivan",
+              "Using sign language and touch",
+              "She learned to read, write, and speak",
+              "Her life and experiences",
+              "By traveling and helping others",
+              "She showed people with disabilities can learn and succeed",
+            ],
+          },
+          {
+            title: "The Great Wall of China",
+            text: `The Great Wall of China is one of the most famous structures in the world. It was built over 2,000 years ago to protect China from invaders. The wall stretches for thousands of miles across mountains, deserts, and plains.
+
+        Many workers built the wall using bricks, stones, and earth. The wall has watchtowers and gates. Today, the Great Wall is a symbol of China's history and strength. Millions of people visit it every year to learn about its past.`,
+            questions: [
+              "Why was the Great Wall of China built?",
+              "How old is the Great Wall?",
+              "What materials were used to build the wall?",
+              "What features does the wall have?",
+              "What does the Great Wall symbolize?",
+              "Who built the wall?",
+              "How long is the Great Wall?",
+              "Why do people visit the Great Wall today?",
+            ],
+            answers: [
+              "To protect China from invaders",
+              "Over 2,000 years old",
+              "Bricks, stones, and earth",
+              "Watchtowers and gates",
+              "China's history and strength",
+              "Many workers",
+              "Thousands of miles",
+              "To learn about its history",
+            ],
+          },
+          {
+            title: "The Rainforest",
+            text: `Rainforests are thick forests found near the equator. They are warm, wet, and full of life. Rainforests have tall trees, vines, and many plants. Animals like monkeys, parrots, jaguars, and frogs live there.
+
+        Rainforests are important because they produce oxygen and help control the Earth's climate. Many medicines come from rainforest plants. Sadly, rainforests are being cut down for wood and farmland. Protecting rainforests helps keep our planet healthy.`,
+            questions: [
+              "Where are rainforests found?",
+              "What is the climate like in rainforests?",
+              "Name three animals that live in rainforests.",
+              "Why are rainforests important?",
+              "What do rainforests produce?",
+              "Why are rainforests being cut down?",
+              "How can we protect rainforests?",
+              "What comes from rainforest plants?",
+            ],
+            answers: [
+              "Near the equator",
+              "Warm and wet",
+              "Monkeys, parrots, jaguars, frogs",
+              "They produce oxygen and help the climate",
+              "Oxygen",
+              "For wood and farmland",
+              "By not cutting down trees and using less wood",
+              "Medicines",
+            ],
+          },
+          {
+            title: "The Moon Landing",
+            text: `On July 20, 1969, astronauts Neil Armstrong and Buzz Aldrin landed on the moon. Their spaceship was called Apollo 11. Armstrong was the first person to step onto the moon and said, "That's one small step for man, one giant leap for mankind."
+
+        The astronauts collected rocks, took pictures, and planted an American flag. Their mission showed that people could travel to other worlds. The moon landing was watched by millions of people and is remembered as a great achievement.`,
+            questions: [
+              "Who were the first people to land on the moon?",
+              "What was the name of their spaceship?",
+              "When did the moon landing happen?",
+              "Who was the first person to step onto the moon?",
+              "What did the astronauts do on the moon?",
+              "What did Armstrong say when he stepped onto the moon?",
+              "Why was the moon landing important?",
+              "How did people watch the moon landing?",
+            ],
+            answers: [
+              "Neil Armstrong and Buzz Aldrin",
+              "Apollo 11",
+              "July 20, 1969",
+              "Neil Armstrong",
+              "Collected rocks, took pictures, planted a flag",
+              '"That\'s one small step for man, one giant leap for mankind."',
+              "It showed people could travel to other worlds",
+              "On television",
+            ],
+          },
+          {
+            title: "The Seasons",
+            text: `There are four seasons in a year: spring, summer, fall, and winter. Each season has different weather and activities. Spring is when flowers bloom and animals have babies. Summer is hot and people go swimming. Fall is when leaves change color and the weather gets cooler. Winter is cold and sometimes snowy.
+
+        Seasons happen because the Earth moves around the sun and tilts on its axis. This changes how much sunlight each part of the Earth gets. People and animals adapt to the seasons in different ways.`,
+            questions: [
+              "How many seasons are there?",
+              "Name the four seasons.",
+              "What happens in spring?",
+              "What is summer like?",
+              "What happens in fall?",
+              "What is winter like?",
+              "Why do seasons change?",
+              "How do people adapt to seasons?",
+            ],
+            answers: [
+              "Four",
+              "Spring, summer, fall, winter",
+              "Flowers bloom and animals have babies",
+              "It is hot and people go swimming",
+              "Leaves change color and it gets cooler",
+              "It is cold and sometimes snowy",
+              "Because the Earth moves around the sun and tilts",
+              "By changing clothes and activities",
+            ],
+          },
+          {
+            title: "The Lost City of Pompeii",
+            text: `On August 24, in the year 79 CE, the ancient Roman city of Pompeii was thriving. Located near the Bay of Naples in Italy, this wealthy city was home to about 20,000 people. Merchants sold goods in the forum, children played in the streets, and families prepared for their evening meals. No one knew that within hours, their city would be buried under volcanic ash and forgotten for nearly 1,700 years.
+
+Mount Vesuvius, the volcano that loomed over Pompeii, had been quiet for centuries. The people living nearby didn't even realize it was a volcano. The mountain's slopes were covered with vineyards and farms, and its soil was rich and fertile from previous eruptions that had occurred long before anyone could remember. There had been some earthquakes in the days before the eruption, but earthquakes were common in the region, so people didn't think much of them.
+
+The eruption began around noon with a massive explosion that sent a column of ash and pumice more than 20 miles into the sky. For the next 12 hours, this volcanic material rained down on Pompeii, burying the city under several feet of debris. People tried to flee or took shelter in their homes, hoping the eruption would stop. But the worst was yet to come.
+
+In the early morning hours of August 25, the eruption column collapsed, sending fast-moving flows of hot gas, ash, and rock—called pyroclastic surges—racing down the mountain at speeds of over 100 miles per hour. These deadly clouds had temperatures of up to 570 degrees Fahrenheit. Nothing in their path survived. Within moments, Pompeii was completely buried under approximately 20 feet of volcanic material. The nearby city of Herculaneum suffered a similar fate.
+
+Pompeii remained buried and largely forgotten for centuries. The location of the city was lost, and it became nothing more than a legend. Then, in 1748, workers digging a well discovered some ancient ruins. Archaeologists began excavating the site, and they were amazed by what they found. The volcanic ash had preserved the city in remarkable detail, creating a snapshot of Roman life frozen in time.
+
+The excavations revealed streets lined with shops, beautiful homes with colorful frescoes on the walls, public baths, temples, and an amphitheater. Archaeologists found bread still in ovens, coins on counters, and graffiti on walls. They even discovered the remains of people who had been caught in the eruption. The volcanic ash had hardened around their bodies, and when the bodies decomposed, they left hollow spaces. By filling these spaces with plaster, archaeologists created casts that showed the people's final moments in heartbreaking detail.
+
+Today, Pompeii is one of the most important archaeological sites in the world. It provides invaluable information about daily life in ancient Rome. Visitors can walk the same streets that Romans walked 2,000 years ago and see how they lived, worked, and died. The ruins remind us of both the awesome power of nature and the resilience of human civilization. Mount Vesuvius is still an active volcano, and about three million people now live in its shadow, but modern technology allows scientists to monitor the volcano and warn people if another eruption is coming.`,
+            questions: [
+              "What year was Pompeii buried by the eruption of Mount Vesuvius?",
+              "How many people lived in Pompeii before the eruption?",
+              "Why didn't the people realize Mount Vesuvius was dangerous?",
+              "What are pyroclastic surges?",
+              "How deep was Pompeii buried under volcanic material?",
+              "When was Pompeii rediscovered?",
+              "How did archaeologists create casts of the victims?",
+              "Why is Pompeii important to archaeologists today?",
+            ],
+            answers: [
+              "79 CE (or AD 79)",
+              "About 20,000 people",
+              "The volcano had been quiet for centuries and people didn't know it was a volcano",
+              "Fast-moving flows of hot gas, ash, and rock that move at high speeds with very high temperatures",
+              "Approximately 20 feet",
+              "In 1748, when workers digging a well discovered ancient ruins",
+              "They filled the hollow spaces left after bodies decomposed with plaster",
+              "It provides detailed information about daily life in ancient Rome",
+            ],
+          },
+        ];
+
+        const selectedPassage = customPassage
+          ? {
+              text: customPassage,
+              questions: [
+                "What is the main idea of the passage?",
+                "Who are the main characters or subjects?",
+                "What important details support the main idea?",
+                "What can you infer from the passage?",
+                "What is the author's purpose?",
+                "What conclusions can you draw?",
+                "How would you summarize this passage?",
+                "What questions do you still have after reading?",
+              ],
+              answers: Array(8).fill(
+                "Answers will vary based on student's understanding of the passage.",
+              ),
+            }
+          : passages[Math.floor(Math.random() * passages.length)];
+
+        let html = "<h3>Reading Comprehension</h3>";
+        if (selectedPassage.title) {
+          html += `<h4 style="margin: 16px 0; color: #2d0241;">${selectedPassage.title}</h4>`;
+        }
+        html += `<div class="reading-content"><p>${selectedPassage.text}</p></div>`;
+        html += '<div class="reading-questions"><h4>Answer the questions:</h4>';
+
+        selectedPassage.questions.slice(0, numQuestions).forEach((q, i) => {
+          html += `<div class="reading-question">${i + 1}. ${q}<br><br>Answer: ______________________________</div>`;
+        });
+        html += "</div>";
+
+        // Add answer key
+        html += '<div class="answer-key"><h3>Answer Key</h3>';
+        selectedPassage.answers.slice(0, numQuestions).forEach((a, i) => {
+          html += `<div class="answer-key-item"><strong>${i + 1}.</strong> ${a}</div>`;
+        });
+        html += "</div>";
+
+        return html;
+      }
+
+      function generateVocabulary(level, numWords) {
+        const words = {
+          kindergarten: [
+            "cat",
+            "dog",
+            "sun",
+            "run",
+            "big",
+            "red",
+            "happy",
+            "play",
+            "jump",
+            "ball",
+          ],
+          grade1: [
+            "friend",
+            "school",
+            "teacher",
+            "learn",
+            "book",
+            "write",
+            "read",
+            "think",
+            "help",
+            "kind",
+          ],
+          grade2: [
+            "beautiful",
+            "discover",
+            "explore",
+            "imagine",
+            "different",
+            "favorite",
+            "important",
+            "promise",
+            "remember",
+            "together",
+          ],
+          grade3: [
+            "adventure",
+            "curious",
+            "difficult",
+            "enormous",
+            "grateful",
+            "incredible",
+            "mysterious",
+            "ordinary",
+            "peculiar",
+            "remarkable",
+          ],
+          grade4: [
+            "ambitious",
+            "authentic",
+            "compassion",
+            "diligent",
+            "elaborate",
+            "immense",
+            "inevitable",
+            "magnificent",
+            "persevere",
+            "resilient",
+          ],
+          grade5: [
+            "abundance",
+            "contemplating",
+            "determination",
+            "eloquent",
+            "extraordinary",
+            "hypothesis",
+            "innovative",
+            "meticulous",
+            "perspective",
+            "sophisticated",
+          ],
+        };
+
+        const selectedWords = words[level] || words.grade2;
+        let html = "<h3>Vocabulary Practice</h3>";
+        html += '<div class="word-list">';
+        selectedWords.slice(0, numWords).forEach((word) => {
+          html += `<div class="word-item">${word}</div>`;
+        });
+        html += "</div>";
+        html += '<div class="reading-questions"><h4>Activities:</h4>';
+        html +=
+          '<div class="reading-question">1. Write a sentence using each word above.</div>';
+        html +=
+          '<div class="reading-question">2. Define three words from the list in your own words.</div>';
+        html +=
+          '<div class="reading-question">3. Draw a picture to illustrate one of the vocabulary words.</div>';
+        html += "</div>";
+        return html;
+      }
+
+      function generateSightWords(level, numWords) {
+        const sightWords = {
+          kindergarten: [
+            "I",
+            "a",
+            "the",
+            "is",
+            "you",
+            "to",
+            "and",
+            "we",
+            "can",
+            "see",
+            "go",
+            "me",
+            "my",
+            "like",
+            "he",
+            "she",
+            "it",
+            "in",
+            "on",
+            "at",
+          ],
+          grade1: [
+            "are",
+            "was",
+            "said",
+            "have",
+            "they",
+            "do",
+            "of",
+            "with",
+            "his",
+            "this",
+            "but",
+            "from",
+            "had",
+            "not",
+            "what",
+            "all",
+            "were",
+            "when",
+            "your",
+            "there",
+          ],
+          grade2: [
+            "would",
+            "been",
+            "their",
+            "could",
+            "which",
+            "these",
+            "about",
+            "many",
+            "some",
+            "words",
+            "write",
+            "into",
+            "water",
+            "people",
+            "than",
+            "first",
+            "other",
+            "called",
+            "before",
+            "after",
+          ],
+        };
+
+        const words = sightWords[level] || sightWords.grade1;
+        let html = "<h3>Sight Words Practice</h3>";
+        html +=
+          "<p><strong>Instructions:</strong> Practice reading these sight words. Trace them, write them, and use them in sentences.</p>";
+        html += '<div class="word-list">';
+        words.slice(0, numWords).forEach((word) => {
+          html += `<div class="word-item">${word}</div>`;
+        });
+        html += "</div>";
+        html += '<div class="reading-questions">';
+        html += "<h4>Write each word 3 times:</h4>";
+        words.slice(0, Math.min(5, numWords)).forEach((word, i) => {
+          html += `<div class="reading-question">${i + 1}. ${word}: __________ __________ __________</div>`;
+        });
+        html += "</div>";
+        return html;
+      }
+
+      function generateSpelling(level, numWords) {
+        const spellingWords = {
+          kindergarten: [
+            "hat",
+            "cat",
+            "mat",
+            "bat",
+            "rat",
+            "sun",
+            "fun",
+            "run",
+            "bun",
+            "pet",
+            "let",
+            "get",
+            "wet",
+            "sit",
+            "fit",
+            "hit",
+          ],
+          grade1: [
+            "play",
+            "stay",
+            "day",
+            "way",
+            "make",
+            "take",
+            "came",
+            "game",
+            "like",
+            "bike",
+            "time",
+            "nine",
+            "tree",
+            "free",
+            "keep",
+          ],
+          grade2: [
+            "happy",
+            "funny",
+            "sunny",
+            "pretty",
+            "baby",
+            "ready",
+            "every",
+            "really",
+            "family",
+            "story",
+            "sorry",
+            "very",
+            "puppy",
+            "angry",
+            "busy",
+          ],
+          grade3: [
+            "beautiful",
+            "because",
+            "before",
+            "believe",
+            "could",
+            "enough",
+            "favorite",
+            "friend",
+            "might",
+            "should",
+            "special",
+            "thought",
+            "through",
+            "together",
+            "would",
+          ],
+          grade4: [
+            "accident",
+            "ancient",
+            "anxious",
+            "appreciate",
+            "certificate",
+            "chocolate",
+            "decision",
+            "excellent",
+            "extraordinary",
+            "favorite",
+            "immediately",
+            "incredible",
+            "necessary",
+            "restaurant",
+            "separate",
+          ],
+          grade5: [
+            "accommodation",
+            "acknowledge",
+            "accomplish",
+            "embarrass",
+            "environment",
+            "existence",
+            "government",
+            "immediately",
+            "independent",
+            "intelligence",
+            "millennium",
+            "parliament",
+            "privilege",
+            "recommend",
+            "responsibility",
+          ],
+        };
+
+        const words = spellingWords[level] || spellingWords.grade2;
+        let html = "<h3>Spelling Practice</h3>";
+        html += '<div class="word-list">';
+        words.slice(0, numWords).forEach((word, i) => {
+          html += `<div class="word-item">${i + 1}. ${word}</div>`;
+        });
+        html += "</div>";
+        html += '<div class="reading-questions">';
+        html += "<h4>Activities:</h4>";
+        html +=
+          '<div class="reading-question">1. Write each spelling word 5 times.</div>';
+        html +=
+          '<div class="reading-question">2. Use 5 words in complete sentences.</div>';
+        html +=
+          '<div class="reading-question">3. Circle the vowels in each word.</div>';
+        html +=
+          '<div class="reading-question">4. Put the words in alphabetical order.</div>';
+        html += "</div>";
+        return html;
+      }
+
+      function displayPreview(title, content, fontChoice = "google-sans") {
+        const previewContainer = document.getElementById("preview");
+        const previewContent = document.getElementById("preview-content");
+
+        // Remove existing font classes
+        previewContainer.classList.remove(
+          "font-google-sans",
+          "font-comic-relief",
+        );
+
+        // Add selected font class
+        if (fontChoice === "comic-relief") {
+          previewContainer.classList.add("font-comic-relief");
+        } else {
+          previewContainer.classList.add("font-google-sans");
+        }
+
+        previewContent.innerHTML = content;
+        previewContainer.classList.add("active");
+        previewContainer.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function printPreview() {
+        if (document.getElementById("preview").classList.contains("active")) {
+          window.print();
+        } else {
+          alert("Please generate a sheet first before printing.");
+        }
+      }
+    </script>
+  </body>
+</html>
