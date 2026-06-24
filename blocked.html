@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This Website has been blocked by your administrator</title>
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #08043d;
+        color: #fff;
+      }
+      .container {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+      }
+      icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+      .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        font: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .moreinfosection {
+        display: none;
+        max-width: 600px;
+        text-align: left;
+        gap: 8px;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          padding: 16px;
+          gap: 16px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .btn {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 24px;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 680px;
+        }
+
+        h1 {
+          font-size: 1.75rem;
+        }
+
+        p {
+          font-size: 0.95rem;
+        }
+      }
+
+      @media (max-width: 510px) {
+        .container {
+          padding: 14px;
+          gap: 12px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 0.9rem;
+        }
+
+        .btn {
+          padding: 12px;
+          font-size: 14px;
+        }
+
+        icon {
+          font-size: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container liquid-glass">
+      <icon>lock</icon>
+      <h1>This Website has been blocked by your administrator</h1>
+      <p>
+        Your administrator has restricted access to this website. Please contact
+        your administrator for more information.
+      </p>
+      <button id="learnModeBtn" class="btn liquid-glass">Learn More</button>
+      <div class="moreinfosection">
+        <p id="urlInfo">URL: No URL provided</p>
+        <p id="timestampInfo">Timestamp: No timestamp provided</p>
+        <p id="userAgentInfo">User Agent: No user agent provided</p>
+      </div>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const blockedUrl = params.get("url") || "No URL provided";
+      const timestamp = params.get("timestamp") || new Date().toLocaleString();
+
+      document.getElementById("urlInfo").textContent = `URL: ${blockedUrl}`;
+      document.getElementById("timestampInfo").textContent =
+        `Timestamp: ${timestamp}`;
+      document.getElementById("userAgentInfo").textContent =
+        `User Agent: ${navigator.userAgent || "No user agent provided"}`;
+
+      const learnModeBtn = document.getElementById("learnModeBtn");
+      const moreInfoSection = document.querySelector(".moreinfosection");
+
+      learnModeBtn.addEventListener("click", () => {
+        const isVisible = moreInfoSection.style.display === "block";
+        moreInfoSection.style.display = isVisible ? "none" : "block";
+        learnModeBtn.textContent = isVisible ? "Learn More" : "Hide Details";
+      });
+    </script>
+  </body>
+</html>
