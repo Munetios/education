@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      This site has been blocked by your Administrator - Munetios WebFilter
+    </title>
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <link rel="shortcut icon" href="blocked.png" type="image/x-icon" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-weight: 400;
+      }
+      body {
+        background-color: #08043d;
+        color: #fff;
+      }
+      .topbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+      }
+      .topbar-left {
+        display: flex;
+        align-items: center;
+      }
+      .logo {
+        height: 56px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+      .content-container {
+        margin: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 18px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .icon-lock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 48px !important;
+      }
+      .icon-lock icon {
+        font-size: 48px !important;
+      }
+      .title-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .description-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      button {
+        all: unset;
+        padding: 10px 20px;
+        border-radius: 124px;
+        cursor: pointer;
+        background-color: #680ecfd2;
+        transition: background-color 0.3s;
+        color: #fff;
+        border: 1px solid #ffffff1a;
+        backdrop-filter: blur(5px);
+      }
+      button:hover {
+        background-color: #5a0bb1d2;
+      }
+      .website-url {
+        font-size: 24px;
+      }
+      .bypass-password {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 24px;
+        width: min(100%, 720px);
+        gap: 12px;
+      }
+      .bypass-password.visible {
+        display: flex;
+      }
+      .bypass-title-container {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 12px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .password-input-container {
+        width: 100%;
+      }
+      input[type="password"] {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+      input[type="password"]:focus {
+        border-color: rgba(159, 116, 255, 0.9);
+        box-shadow: 0 0 0 3px rgba(159, 116, 255, 0.18);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      input[type="password"]::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .note {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 12px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .bypass-errors {
+        width: 100%;
+        margin-top: 16px;
+        text-align: center;
+        color: #ffd3d3;
+      }
+      .error-message {
+        display: none;
+        margin: 8px 0;
+      }
+      .bypass-errors.visible .error-message {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar-container">
+      <div class="topbar-left">
+        <div class="logo liquid-glass" id="school-name">Munetios WebFilter</div>
+      </div>
+    </div>
+    <div class="content-container liquid-glass">
+      <div class="icon-lock"><icon>lock</icon></div>
+      <div class="title-container">
+        <h1 id="blocked-title">This site has been blocked by your administrator</h1>
+      </div>
+      <div class="description-container">
+        <p id="blocked-description">
+          This website has been blocked by your school's administrator. To
+          unblock it, enter the bypass password or contact your administrator.
+        </p>
+        <br />
+        <p class="website-url"><span id="url-label">URL</span>: <span id="website-url"></span></p>
+        <br></br>
+        <p class="website-url"><span id="category-label">Category</span>: <span id="website-category"></span></p>
+      </div>
+      <div class="action-buttons">
+        <button
+          class="bypass-button"
+          title="Clicking bypass will show the password."
+          id="bypass-button"
+        >
+          <span id="bypass-label">Bypass</span>
+        </button>
+        <button class="contact-button" id="contact-button">
+          <span id="contact-label">Contact Administrator</span>
+        </button>
+      </div>
+      <div class="bypass-password hidden">
+        <div class="bypass-title-container" id="bypass-title">
+          Enter the bypass password
+        </div>
+        <br>
+        <div class="password-input-container">
+          <input id="bypass-password-input" type="password" placeholder="Enter bypass password" />
+        </div>
+        <br>
+        <button class="submit-bypass-button" id="submit-bypass-button">
+          <span id="submit-label">Submit</span>
+        </button>
+        <div class="bypass-errors">
+          <p class="error-message" id="error-incorrect">Incorrect bypass password. Please try again.</p>
+          <p class="error-message" id="error-empty">The bypass password cannot be empty.</p>
+          <p class="error-message" id="error-short">The bypass password is too short.</p>
+          <p class="error-message" id="error-invalid">The bypass password contains invalid characters.</p>
+          <p class="error-message" id="error-extension">
+            We were unable to process the bypass request because you're not using the
+            Munetios WebFilter Extension.
+          </p>
+          <p class="error-message" id="error-failed">Failed to read the bypass password.</p>
+        </div>
+        <br /><br />
+        <p class="note" id="bypass-note">
+          Note: Entering the correct bypass password will temporarily unblock the
+          website until you close the tab.
+        </p>
+      </div>
+    </div>
+
+    <script src="block.js"></script>
+  </body>
+</html>
